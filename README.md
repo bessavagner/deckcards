@@ -2,7 +2,6 @@
 
 This is a python package for building or playing card game.
 
-![cards](https://github.com/bessava/heateq/blob/master/sample.png)
 
 ## Installation
 
