@@ -17,7 +17,7 @@ To install deckcards,
 
 ## Basic usage
 
-The ```deckofcards``` modules provide a framework to implement a game of cards in python. For details on cards and games of cards check out [this wikipedia page](https://en.wikipedia.org/wiki/Standard_52-card_deck).
+The ```deckcards``` modules provide a framework to implement a game of cards in python. For details on cards and games of cards check out [this wikipedia page](https://en.wikipedia.org/wiki/Standard_52-card_deck).
 
 The two main classes are ```Card``` and ```Deck```.
 
@@ -26,7 +26,7 @@ The two main classes are ```Card``` and ```Deck```.
 An instance of ```Card``` represents a single card. Create a card object providing two parameters: rank and suit. Both string. Valid values for ranks are:
 
 ```python
->>> import deckofcards as dc
+>>> import deckcards as dc
 >>> print(cd.Card.ranks)
 ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
 ```
@@ -86,7 +86,7 @@ A fith behavior can be reproduced with method ```deal(self, n_players=2, n_cards
 In src/examples is a script with black Jack implemented. You can run the game:
 
 ```python
->> from deckofcards.examples import BlackJack
+>> from deckcards.examples import BlackJack
 >> game = BlackJack()
 >> game.run()
 ```
