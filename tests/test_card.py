@@ -1,6 +1,6 @@
 import pytest
-from deckofcards import Card
-from deckofcards import CardError
+from deckcards import Card
+from deckcards import CardError
 
 def test_card_suit():
     """Checks if adding space to valid suit string still

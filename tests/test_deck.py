@@ -1,8 +1,8 @@
 """Tests on deck module
 """
 import pytest
-from deckofcards import Deck
-from deckofcards import DeckError
+from deckcards import Deck
+from deckcards import DeckError
 
 def test_deck_deal():
     """Test error of exceeding numbers of cards

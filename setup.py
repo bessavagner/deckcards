@@ -4,16 +4,16 @@ with open('README.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='deckofcards',
+    name='deckcards',
     author='Tom Chen',
     author_email='bessavagner@gmail.com',
     description='Example PyPI (Python Package Index) Package',
     keywords='example, pypi, package',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/bessavagner/deckofcards',
+    url='https://github.com/bessavagner/deckcards',
     project_urls={
-        'Documentation': 'https://github.com/bessavagner/deckofcards',
+        'Documentation': 'https://github.com/bessavagner/deckcards',
         #'Bug Reports':
         #'https://github.com/bessavagner/deckofcards/issues',
         #'Source Code': 'https://github.com/bessavagner/deckofcards',

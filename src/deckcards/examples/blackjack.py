@@ -1,6 +1,6 @@
 import os
 import time
-import deckofcards as dc
+import deckcards as dc
 from typing import List
 
 def clear_console():
