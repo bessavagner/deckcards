@@ -2,5 +2,3 @@
 """
 
 from .blackjack import BlackJack
-
-BlackJack()
