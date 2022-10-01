@@ -1,56 +1,92 @@
-# Example PyPI (Python Package Index) Package & Tutorial / Instruction / Workflow for 2021
+# Deck of cards
 
-[![PyPI package](https://img.shields.io/badge/pip%20install-example--pypi--package-brightgreen)](https://pypi.org/project/example-pypi-package/) [![version number](https://img.shields.io/pypi/v/example-pypi-package?color=green&label=version)](https://github.com/tomchen/example_pypi_package/releases) [![Actions Status](https://github.com/tomchen/example_pypi_package/workflows/Test/badge.svg)](https://github.com/tomchen/example_pypi_package/actions) [![License](https://img.shields.io/github/license/tomchen/example_pypi_package)](https://github.com/tomchen/example_pypi_package/blob/main/LICENSE)
+This is a python package for building or playing card game.
 
-This is an example [PyPI](https://pypi.org/) (Python Package Index) package set up with automated tests and package publishing workflow using GitHub Actions CI/CD. It is made primarily for GitHub + VS Code (Windows / Mac / Linux) users who are about to write and publish their first PyPI package. The package could serve as a starter / boilerplate / demo and the tutorial could give you a quick and concise explaination to solve some small but annoying problems you might encounter, such as package / module name confusion, and VS Code test configuration issues.
+## Installation
 
-<details><summary><strong>Differences from pypa/sampleproject (click to show/hide)</strong></summary>
+Download, open directory on terminal and run ```python -m pip install .```
 
-This example package is inspired by / based on the [official sample project pypa/sampleproject](https://github.com/pypa/sampleproject), but this package:
+## Basic usage
 
-- is a simplified version of pypa/sampleproject (and the [official Python Packaging User Guide](https://packaging.python.org/))
-- uses GitHub Actions for both testing and publishing, instead of Travis CI
-- is tested when pushing `master` or `main` branch, and is published when create a release
-- includes test files in the source distribution
-- uses **setup.cfg** for [version single-sourcing](https://packaging.python.org/guides/single-sourcing-package-version/) (setuptools 46.4.0+)
-- has **.vscode\settings.json** and **vscode.env** which adds **src/** folder to `PYTHONPATH`, so that test files don't have linting errors and may run with pytest in VS Code
-- does not use flake8 for automated linting - it is sometimes too strict and inflexible, you may use pylint locally instead
-- has this tutorial that covers everything you need to know in one page. Everything that might not be very useful, is hidden in collapsible sections that you can click to show
-- has **[.editorconfig](https://editorconfig.org/#download)** file
+The ```deckofcards``` modules provide a framework to implement a game of cards in python. For details on cards and games of cards check out [this wikipedia page](https://en.wikipedia.org/wiki/Standard_52-card_deck).
 
-</details>
+The two main classes are ```Card``` and ```Deck```.
 
-## Make necessary changes
+### ```Card```
 
-### Use as a template
+An instance of ```Card``` represents a single card. Create a card object providing two parameters: rank and suit. Both string. Valid values for ranks are:
 
-[![Use the template](https://img.shields.io/static/v1?label=&message=Click%20here%20to%20use%20this%20package%20as%20a%20template%20to%20start%20a%20new%20repo%20on%20GitHub&color=brightgreen&style=for-the-badge)](https://github.com/tomchen/example_pypi_package/generate)
+```python
+>>> import deckofcards as dc
+>>> print(cd.Card.ranks)
+['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+```
 
-(Click the above button to use this example package as a template for your new GitHub repo, this will initialize a new repository and my commits will not be in your git history)
+And valids values for suits are either their names or their symbols in [unicode emoji representation](https://en.wikipedia.org/wiki/Playing_cards_in_Unicode#Emoji).
 
-(If you do not use GitHub, you can [download the archive of the example package](https://github.com/tomchen/example_pypi_package/archive/main.zip))
+```Card``` have dictionaries to map both ways:
 
-### Package, module name
+```python
+>>> print(dc.Card.suits)
+{'club': '♣', 'diamond': '♦', 'heart': '♥', 'spade': '♠'}
+>>> print(dc.Card.suits_name)
+{'♣': 'club', '♦': 'diamond', '♥': 'heart', '♠': 'spade'}
+```
 
-Many use a same package and module name, you could definitely do that. But this example package and its module's names are different: `example_pypi_package` and `examplepy`.
+A card objet is only a representation, meaning that it don't present any behavior (method). Create a card:
 
-Open `example_pypi_package` folder with Visual Studio Code, <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> (Windows / Linux) or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> (MacOS) to find all occurrences of both names and replace them with your package and module's names. Also remember to change the name of the folder **src/examplepy**.
+```python
+>>> card = dc.Card('A', '♠')
+>>> print(card.rank)
+A
+>>> print(card.suit)
+♠
+>>> print(card)
+A ♠
+>>> card
+Card.rank: A, Card.suit: ♠
+```
+By defult, 'A' is the highest rank:
+```python
+>>> card.value
+13
+```
 
-Simply and very roughly speaking, package name is used in `pip install <PACKAGENAME>` and module name is used in `import <MODULENAME>`. Both names should consist of lowercase basic letters (a-z). They may have underscores (`_`) if you really need them. Hyphen-minus (`-`) should not be used.
+## ```Deck```
 
-You'll also need to make sure the URL "https://pypi.org/project/example-pypi-package/" (replace `example-pypi-package` by your package name, with all `_` becoming `-`) is not occupied.
+An instance of ```Deck``` has four behaviors to build most of popular card games: draw, throw, waste and pick a card, based on three main areas:
 
-<details><summary><strong>Details on naming convention (click to show/hide)</strong></summary>
+**Pack**: cards not in game yet. Also know as draw pile, this area feeds the other two areas.
+- **Stock**: cards in game. Although not implemented in this package, you can think of sub-areas of stock as players's hands and as stack (faced down cards in front of players).
+- **Waste pile**: cards not in game anymore.
 
-Underscores (`_`) can be used but such use is discouraged. Numbers can be used if the name does not start with a number, but such use is also discouraged.
+### **Draw**
+Action of taking the card from the top of ```pack``` (draw pile) and put it in ```stock```. Stock is where cards in game are stored. A card in game is a card in a player's hand or in table, or stack (shown of not).
 
-Name starting with a number and/or containing hyphen-minus (`-`) should not be used: although technically legal, such name causes a lot of trouble − users have to use `importlib` to import it.
+### **Throw**
+Action of taking a given card from stock and throw it to ```wastepile```. In practice the most common throw is discarding card from a player's hand.
 
-Don't be fooled by the URL "[pypi.org/project/example-pypi-package/](https://pypi.org/project/example-pypi-package/)" and the name "example-pypi-package" on pypi.org. pypi.org and pip system convert all `_` to `-` and use the latter on the website / in `pip` command, but the real name is still with `_`, which users should use when importing the package.
+### **Waste**
+Action of taking a given card from pack, or the card from it's top, and discard to ```wastepile```. 
 
-There's also [namespace](https://packaging.python.org/guides/packaging-namespace-packages/) to use if you need sub-packages.
+### **Pick**
+Action of taking a given card from pack, or the card from it's top, and place it in ```stock```.
 
-</details>
+A fith behavior can be reproduced with method ```deal(self, n_players=2, n_cards=2, standard=True) ```, wich returns a list of ```n_cards``` in each elements, whith length ```n_players```. This function puts all cards in stock. The dealing fashion is standard by default, i.e., one card each hand, each round of dealing.
+
+In src/examples is a script with black Jack implemented. You can run the game:
+
+```python
+>> from deckofcards.examples import BlackJack
+>> game = BlackJack()
+>> game.run()
+```
+```shell
+------------
+Dealer's cards: |9 ♥||? ?|      -> score: 9
+player's cards: |J ♠||5 ♦|      -> score: 15
+- Digit s for stand or h for hit:
+```
 
 ### Other changes
 
@@ -123,7 +159,7 @@ tox -e py39
 
 </details>
 
-If you add more files to the root directory (**example_pypi_package/**), you'll need to add your file to `check-manifest --ignore` list in **tox.ini**.
+If you add more files to the root directory (**deckofcards/**), you'll need to add your file to `check-manifest --ignore` list in **tox.ini**.
 
 <details><summary><strong>Thanks to GitHub Actions' automated process, you don't need to generate distribution files locally. But if you insist, click to read the "Generate distribution files" section</strong></summary>
 
@@ -141,7 +177,7 @@ python -m pip install --user --upgrade setuptools wheel
 
 ### Generate `dist`
 
-From `example_pypi_package` directory, run the following command, in order to generate production version for source distribution (sdist) in `dist` folder:
+From `deckofcards` directory, run the following command, in order to generate production version for source distribution (sdist) in `dist` folder:
 
 ```bash
 python setup.py sdist bdist_wheel
@@ -152,13 +188,13 @@ python setup.py sdist bdist_wheel
 Optionally, you can install dist version of your package locally before uploading to [PyPI](https://pypi.org/) or [TestPyPI](https://test.pypi.org/):
 
 ```bash
-pip install dist/example_pypi_package-0.1.0.tar.gz
+pip install dist/deckofcards-0.1.0.tar.gz
 ```
 
 (You may need to uninstall existing package first:
 
 ```bash
-pip uninstall example_pypi_package
+pip uninstall deckofcards
 ```
 
 There may be several installed packages with the same name, so run `pip uninstall` multiple times until it says no more package to remove.)
@@ -256,3 +292,8 @@ python -m twine upload --repository pypi dist/*
 - [GitHub Actions Guides: Building and testing Python](https://docs.github.com/en/free-pro-team@latest/actions/guides/building-and-testing-python)
 
 Btw, if you want to publish TypeScript (JavaScript) package to the npm registry, go to [Example TypeScript Package ready to be published on npm for 2021](https://github.com/tomchen/example-typescript-package).
+
+
+## Acknowlegments
+
+https://github.com/tomchen/example_pypi_package

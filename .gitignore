@@ -136,3 +136,9 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# python environments
+.venv*
+
+# ipython notebooks
+*.ipynb
