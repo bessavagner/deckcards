@@ -5,10 +5,10 @@ with open('README.md', 'r', encoding='utf-8') as fh:
 
 setuptools.setup(
     name='deckcards',
-    author='Tom Chen',
+    author='Vagner Bessa',
     author_email='bessavagner@gmail.com',
-    description='Example PyPI (Python Package Index) Package',
-    keywords='example, pypi, package',
+    description='Framework for creating or playing card games',
+    keywords='card, game, python',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/bessavagner/deckcards',
@@ -24,11 +24,9 @@ setuptools.setup(
     packages=setuptools.find_packages(where='src'),
     classifiers=[
         # see https://pypi.org/classifiers/
-        'Development Status :: 1 - Planning',
-
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: Build Tools',
-
+        'Topic :: Games/Entertainment :: Board Games',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
