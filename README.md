@@ -1,5 +1,7 @@
 # Deck of cards
 
+<img src="https://img.shields.io/github/license/bessavagner/deckcards" /> <img src="https://img.shields.io/pypi/v/deckcards" />
+
 This is a python package for building or playing card game.
 
 
